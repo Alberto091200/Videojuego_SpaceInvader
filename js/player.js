@@ -12,8 +12,11 @@ class Player {
 		this.img.frames = 1
 
 		this.x = canvasW * 0.53
-		this.y = canvasH * 0.77
+		this.y0 = canvasH * 0.77
 
+		this.y = this.y0
+
+		this.vy = 0
 		this.vx = 3
 
 		this.w = 25
@@ -65,7 +68,7 @@ class Player {
 	}
 
 
-    draw() {
+    draw(frameCounter) {
 		this.ctx.drawImage(
 			this.img,
 			this.img.frameIndex * (this.img.width / this.img.frames), // sx
@@ -78,22 +81,37 @@ class Player {
 			this.h
 		)
 
-        this.bullets = this.bullets.filter(
-			(bullet) => bullet.y - bullet.radius < this.canvasW
-		)
+		this.animateSprite(frameCounter)
+
+    /*     this.bullets = this.bullets.filter(
+			(bullet) => bullet.y - bullet.radius < this.canvas
+		) */
 
 		this.bullets.forEach((bullet) => {
+
 			bullet.draw()
 			bullet.move()
+
+			console.log(this.bullets + "hola")
 		})
 	}
 
     shot() {
-        const y0 = this.y;
 
-        this.bullets.push(new Bullet(this.ctx, this.x + this.w / 2, y0, this.y, this.h));
+        this.bullets.push(new Bullet(this.ctx, this.x + this.w, this.y0, this.y, this.h));
+		console.log("Bala" + new Bullet())
 	}
 	
+	animateSprite(frameCounter) {
+		if (frameCounter % 6 === 0) {
+			this.img.frameIndex++
+
+			if (this.img.frameIndex >= this.img.frames) {
+				this.img.frameIndex = 0
+			}
+		}
+	}
+
     move() {
   
         const leftLimit = this.canvasW * 0.25;
