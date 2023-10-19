@@ -64,6 +64,7 @@ body > * {
 
 #board {
 	background-image: url(../assets/Recreativa.png);
+	background-repeat: no-repeat;
 }
 
 #canvas {

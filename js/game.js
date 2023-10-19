@@ -13,6 +13,7 @@ const Game = {
 
     walls:[],
     lives :5,
+    enemy1: [],
 
     init: function () {
         console.log('Test');
@@ -25,12 +26,13 @@ const Game = {
         const wallWidth = 60;
         const wallHeight = 35;
    
-
-
         this.walls.push(new Wall(Game.ctx, 40, 375 - wallHeight, wallWidth, wallHeight, this.lives));
         this.walls.push(new Wall(Game.ctx, 180, 375 - wallHeight, wallWidth, wallHeight, this.lives));
         this.walls.push(new Wall(Game.ctx, 330, 375 - wallHeight, wallWidth, wallHeight, this.lives));
         this.walls.push(new Wall(Game.ctx, 465, 375 - wallHeight, wallWidth, wallHeight, this.lives));
+
+
+        this.enemy1.push(new Alien1(Game.ctx, 280, 50));
 
         this.reset()
     },
@@ -74,7 +76,7 @@ const Game = {
     drawAll() {
 		this.player.draw(this.frameCounter)
         this.walls.forEach(wall => wall.draw());
-
+        this.enemy1.forEach(enemy1 => enemy1.draw());
         this.scoreboard.update(this.score)
 	},
 
@@ -109,27 +111,10 @@ const Game = {
                 wall.lives -= 1
                 this.player.bullets = this.player.bullets.filter ((b) => b !== bullet)
 
-
-   
                 if (wall.lives <= 0) {
                     this.walls = this.walls.filter((w) => w !== wall)
                 }
-
-
-
             }
-          
-          
-          
-       
-
         })
     )},
-
-    
-
-
-
-
-
 }
