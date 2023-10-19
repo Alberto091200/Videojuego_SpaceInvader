@@ -4,6 +4,8 @@ class Player {
 		this.canvasW = canvasW
 		this.canvasH = canvasH
 		this.keys = keys
+		this.shotsFired = 0;
+		this.walls = this.walls;
 
 		this.img = new Image()
 		this.img.src = 'assets/Player.png'
@@ -11,16 +13,17 @@ class Player {
 		this.img.frameIndex = 0
 		this.img.frames = 1
 
-		this.x = canvasW * 0.53
-		this.y0 = canvasH * 0.77
+		this.x0 = canvasW * 0.48
+		this.y0 = canvasH * 0.90
 
+		this.x = this.x0
 		this.y = this.y0
 
 		this.vy = 0
 		this.vx = 3
 
-		this.w = 25
-		this.h = 20
+		this.w = 30
+		this.h = 25
 
         this.bullets = []
 
@@ -33,6 +36,8 @@ class Player {
 
 		this.setControls()
 	}
+
+	
 
 	setControls() {
 		document.addEventListener('keydown', (event) => {
@@ -68,7 +73,7 @@ class Player {
 	}
 
 
-    draw(frameCounter) {
+    draw() {
 		this.ctx.drawImage(
 			this.img,
 			this.img.frameIndex * (this.img.width / this.img.frames), // sx
@@ -81,27 +86,21 @@ class Player {
 			this.h
 		)
 
-		this.animateSprite(frameCounter)
 
     /*     this.bullets = this.bullets.filter(
 			(bullet) => bullet.y - bullet.radius < this.canvas
-		) */
+		)  */
 
 		this.bullets.forEach((bullet) => {
-
 			bullet.draw()
 			bullet.move()
-
-			console.log(this.bullets + "hola")
 		})
 	}
 
     shot() {
-
-        this.bullets.push(new Bullet(this.ctx, this.x + this.w, this.y0, this.y, this.h));
-		console.log("Bala" + new Bullet())
+		this.bullets.push(new Bullet(this.ctx, this.x - 15 + this.w, this.y0 - 220, this.y, this.h));
 	}
-	
+
 	animateSprite(frameCounter) {
 		if (frameCounter % 6 === 0) {
 			this.img.frameIndex++
@@ -113,18 +112,11 @@ class Player {
 	}
 
     move() {
-  
-        const leftLimit = this.canvasW * 0.25;
-       
-        const rightLimit = this.canvasW * 0.85;
-    
-        if (this.actions.RIGHT && this.x + this.vx + this.w < rightLimit) {
-            this.x += this.vx;
-        }
-        if (this.actions.LEFT && this.x - this.vx > leftLimit) {
-            this.x -= this.vx;
-        }
-    }
-    
-
+		if (this.actions.RIGHT && this.x + this.vx + this.w < this.canvasW - 30) {
+			this.x += this.vx;
+		}
+		if (this.actions.LEFT && this.x - this.vx > 0 + 30) {
+			this.x -= this.vx;
+		}
+	}
 }

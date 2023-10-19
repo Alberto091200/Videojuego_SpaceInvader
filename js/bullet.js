@@ -1,15 +1,18 @@
 class Bullet {
-	constructor(ctx, x, playerY0, playerY, playerH) {
+	constructor(ctx, x, playerY, playerH) {
 		this.ctx = ctx
 
-		this.radius = 2
+		this.radius = 3
+		this.r = this.radius
 		this.x = x
 		this.y = playerY + playerH / 2
 
 		//this.floor = playerY0 + playerH
 
-		this.vx = 10
+		this.vx = 0
 		this.vy = -10
+
+		
 	}
 
 	draw() {

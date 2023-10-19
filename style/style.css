@@ -59,15 +59,15 @@ body > * {
 #board {
 	border-radius: 0px 5px 5px 0px;
 	background-color: var(--green);
-	display: flex;
+
 }
 
 #board {
 	background-image: url(../assets/Recreativa.png);
-	width: 100%;
-	height: 100%;
-	background-size: cover;
-    background-repeat: no-repeat;
-
 }
 
+#canvas {
+	display: block;
+	margin-top: 113px;
+	margin-left: 123px;
+}

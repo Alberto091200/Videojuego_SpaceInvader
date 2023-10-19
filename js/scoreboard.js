@@ -4,8 +4,8 @@ const ScoreBoard = {
 	},
 
 	update: function (score) {
-		this.ctx.font = '30px Arial'
+		this.ctx.font = '15px Arial'
 		this.ctx.fillStyle = 'green'
-		this.ctx.fillText(Math.floor(score), 50, 50)
+		this.ctx.fillText(Math.floor(score), 10, 30)
 	},
 }

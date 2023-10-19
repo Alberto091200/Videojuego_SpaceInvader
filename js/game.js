@@ -12,7 +12,7 @@ const Game = {
     },
 
     walls:[],
-
+    lives :5,
 
     init: function () {
         console.log('Test');
@@ -22,17 +22,15 @@ const Game = {
         this.canvasW = canvas.width;
         this.canvasH = canvas.height;
 
-        const wallWidth = 50;
-        const wallHeight = 50;
-
-        this.walls.push(new Wall(Game.ctx, 140, 480 - wallHeight, wallWidth, wallHeight));
-        this.walls.push(new Wall(Game.ctx, 250, 480 - wallHeight, wallWidth, wallHeight));
-        this.walls.push(new Wall(Game.ctx, 350, 480 - wallHeight, wallWidth, wallHeight));
+        const wallWidth = 60;
+        const wallHeight = 35;
+   
 
 
-  
-
-       
+        this.walls.push(new Wall(Game.ctx, 40, 375 - wallHeight, wallWidth, wallHeight, this.lives));
+        this.walls.push(new Wall(Game.ctx, 180, 375 - wallHeight, wallWidth, wallHeight, this.lives));
+        this.walls.push(new Wall(Game.ctx, 330, 375 - wallHeight, wallWidth, wallHeight, this.lives));
+        this.walls.push(new Wall(Game.ctx, 465, 375 - wallHeight, wallWidth, wallHeight, this.lives));
 
         this.reset()
     },
@@ -43,7 +41,7 @@ const Game = {
 
         this.player = new Player(this.ctx, this.canvasW, this.canvasH, this.keys);
 
-        this.obstacles = []
+ 
 
         this.score = 0
         this.scoreboard.init(this.ctx)
@@ -51,36 +49,7 @@ const Game = {
         this.start()
     },
 
-
-/*     start: function () {
-
-		let frameCounter = 0
-
-        this.intervalId = setInterval(() => {
-			frameCounter++
-            this.ctx.clearRect(0, 0, this.canvasW, this.canvasH);
-
-            this.player.draw(frameCounter);
-			this.player.move();
-
-
-            console.log(this.player.bullets.length)
-            
-            this.player.bullets.forEach((bullet) => {
-                bullet.draw()
-                bullet.move()
-            })
-             
-            this.walls.forEach(wall => wall.draw());
-
-
-        }, 1000 / this.fps); 
-    },*/
-
-
-
     start: function () {
-		// loop de render
 
 		this.frameCounter = 0
 
@@ -90,18 +59,17 @@ const Game = {
 			this.frameCounter++
 
 			this.score += 0.03
-			// this.bso.playbackRate += 0.001
-			// Se genera obstáculo cada x frames
-
 
 			this.drawAll()
 			this.moveAll()
 
+            
+            this.Collision()
+            
+
 
 		}, 1000 / this.fps)
     },
-
-
 
     drawAll() {
 		this.player.draw(this.frameCounter)
@@ -114,16 +82,54 @@ const Game = {
 		this.player.move()
 	},
 
-    gameOver: function () {
-		// para el intervalo que implementa el loop de animación
-		clearInterval(this.intervalId)
-
-		if (confirm('GAME OVER! ¿Volver a jugar?')) {
-			this.reset()
-		}
-	},
-
     clear: function () {
 		this.ctx.clearRect(0, 0, this.canvasW, this.canvasH)
 	},
-};
+
+    // reduceLife() {
+    //     this.lives -= 1 ;
+
+    //     if(this.lives <= 0){
+    //     this.walls = this.walls.filter((w) => w !== this.wall)
+    //     }
+    //     console.log(this.lives)
+    // },
+
+    Collision:function(){
+        return this.walls.some((wall) => this.player.bullets.some((bullet) => {
+
+            const Collision = 
+            bullet.x - bullet.radius < wall.x + wall.w &&
+            bullet.x + bullet.radius > wall.x &&
+            bullet.y + bullet.radius > wall.y &&
+            bullet.y - bullet.radius < wall.y + wall.h
+
+            if (Collision) {
+                // this.reduceLife()
+                wall.lives -= 1
+                this.player.bullets = this.player.bullets.filter ((b) => b !== bullet)
+
+
+   
+                if (wall.lives <= 0) {
+                    this.walls = this.walls.filter((w) => w !== wall)
+                }
+
+
+
+            }
+          
+          
+          
+       
+
+        })
+    )},
+
+    
+
+
+
+
+
+}
