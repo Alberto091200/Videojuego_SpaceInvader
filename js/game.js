@@ -12,10 +12,20 @@ const Game = {
     },
 
     walls:[],
-    lives :5,
+    lives : 5,
+
     enemy1: [],
+    enemy1lives: 1,
+    
+
+    enemy2: [],
+
+    enemy3: [],
+
+
 
     init: function () {
+        
         console.log('Test');
         const canvas = document.querySelector('canvas');
         this.ctx = canvas.getContext('2d');
@@ -25,14 +35,41 @@ const Game = {
 
         const wallWidth = 60;
         const wallHeight = 35;
-   
+
         this.walls.push(new Wall(Game.ctx, 40, 375 - wallHeight, wallWidth, wallHeight, this.lives));
         this.walls.push(new Wall(Game.ctx, 180, 375 - wallHeight, wallWidth, wallHeight, this.lives));
         this.walls.push(new Wall(Game.ctx, 330, 375 - wallHeight, wallWidth, wallHeight, this.lives));
         this.walls.push(new Wall(Game.ctx, 465, 375 - wallHeight, wallWidth, wallHeight, this.lives));
 
 
-        this.enemy1.push(new Alien1(Game.ctx, 280, 50));
+        this.enemy1.push(new Alien1(Game.ctx, 50, 50, this.enemy1lives));
+        this.enemy1.push(new Alien1(Game.ctx, 75, 50, this.enemy1lives));
+        this.enemy1.push(new Alien1(Game.ctx, 100, 50, this.enemy1lives));
+        this.enemy1.push(new Alien1(Game.ctx, 125, 50, this.enemy1lives));
+        this.enemy1.push(new Alien1(Game.ctx, 150, 50, this.enemy1lives));
+        this.enemy1.push(new Alien1(Game.ctx, 175, 50, this.enemy1lives));
+        this.enemy1.push(new Alien1(Game.ctx, 200, 50, this.enemy1lives));
+        this.enemy1.push(new Alien1(Game.ctx, 225, 50, this.enemy1lives));
+
+
+        this.enemy2.push(new Alien2(Game.ctx, 50, 80));
+        this.enemy2.push(new Alien2(Game.ctx, 75, 80));
+        this.enemy2.push(new Alien2(Game.ctx, 100, 80));
+        this.enemy2.push(new Alien2(Game.ctx, 125, 80));
+        this.enemy2.push(new Alien2(Game.ctx, 150, 80));
+        this.enemy2.push(new Alien2(Game.ctx, 175, 80));
+        this.enemy2.push(new Alien2(Game.ctx, 200, 80));
+        this.enemy2.push(new Alien2(Game.ctx, 225, 80));
+
+
+        this.enemy3.push(new Alien3(Game.ctx, 50, 110));
+        this.enemy3.push(new Alien3(Game.ctx, 75, 110));
+        this.enemy3.push(new Alien3(Game.ctx, 100, 110));
+        this.enemy3.push(new Alien3(Game.ctx, 125, 110));
+        this.enemy3.push(new Alien3(Game.ctx, 150, 110));
+        this.enemy3.push(new Alien3(Game.ctx, 175, 110));
+        this.enemy3.push(new Alien3(Game.ctx, 200, 110));
+        this.enemy3.push(new Alien3(Game.ctx, 225, 110));
 
         this.reset()
     },
@@ -67,6 +104,7 @@ const Game = {
 
             
             this.Collision()
+            this.CollisionAlien1()
             
 
 
@@ -76,7 +114,9 @@ const Game = {
     drawAll() {
 		this.player.draw(this.frameCounter)
         this.walls.forEach(wall => wall.draw());
-        this.enemy1.forEach(enemy1 => enemy1.draw());
+        this.enemy1.forEach(enemy1 => enemy1.draw(this.frameCounter));
+        this.enemy2.forEach(enemy2 => enemy2.draw(this.frameCounter));
+        this.enemy3.forEach(enemy3 => enemy3.draw(this.frameCounter));
         this.scoreboard.update(this.score)
 	},
 
@@ -113,6 +153,28 @@ const Game = {
 
                 if (wall.lives <= 0) {
                     this.walls = this.walls.filter((w) => w !== wall)
+                }
+            }
+        })
+    )},
+
+    CollisionAlien1:function(){
+        return this.enemy1.some((Alien1) => this.player.bullets.some((bullet) => {
+
+            const CollisionAlien1 = 
+            bullet.x - bullet.radius < Alien1.x + Alien1.w &&
+            bullet.x + bullet.radius > Alien1.x &&
+            bullet.y + bullet.radius > Alien1.y &&
+            bullet.y - bullet.radius < Alien1.y + Alien1.h
+            
+            if (CollisionAlien1) {
+                this.enemy1lives -= 1
+                console.log(this.enemy1lives)
+                this.player.bullets = this.player.bullets.filter ((b) => b !== bullet)
+
+                if (this.enemy1lives <= 0) {
+                    this.enemy1 = this.enemy1.filter((al1) => al1 !== Alien1)
+
                 }
             }
         })
