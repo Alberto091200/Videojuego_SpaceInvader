@@ -33,14 +33,18 @@ class Player {
 			LEFT: false,
 		}
 
-        
+		
 
 		this.setControls()
 	}
 
 	
 
+
 	setControls() {
+
+		const shotSound = document.getElementById("shot")
+
 		document.addEventListener('keydown', (event) => {
 			switch (event.code) {
 				case this.keys.RIGHT:
@@ -54,6 +58,10 @@ class Player {
                 break
 
                 case this.keys.SHOT:
+					shotSound.pause()
+					shotSound.currentTime = 0
+					shotSound.volume = 0.4
+					shotSound.play()
 					this.shot()
                     console.log('Disparo')
                 break

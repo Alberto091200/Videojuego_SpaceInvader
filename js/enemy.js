@@ -39,9 +39,6 @@ class Enemy {
 
 }
 
-
-
-
 class Alien1 extends Enemy {
 	constructor(ctx, x, y, enemy1lives) {
 		super(ctx, x, y, 25, 15, 'assets/Alien1.png', 1,null, enemy1lives) // Aguanta 1 bala, dispara
@@ -80,9 +77,6 @@ class Alien1 extends Enemy {
 	
 }
 
-
-
-
 class Alien2 extends Enemy {
 	constructor(ctx, x, y, enemy2lives) {
 		super(ctx, x, y, 21, 15, 'assets/Alien2.png', 1, null, null, enemy2lives); // Aguanta 1 bala, no dispara
@@ -104,10 +98,6 @@ class Alien2 extends Enemy {
 		this.animateSprite(frameCounter);
 	}
 }
-
-
-
-
 
 class Alien3 extends Enemy {
 	constructor(ctx, x, y, enemy3lives) {

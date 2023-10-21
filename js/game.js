@@ -83,6 +83,8 @@ const Game = {
 
     start: function () {
 
+
+
 		this.frameCounter = 0
 
 		this.intervalId = setInterval(() => {
@@ -104,6 +106,13 @@ const Game = {
             this.Collision5()
 
             if (this.enemy1.length === 0 && this.enemy2.length === 0 && this.enemy3.length === 0) {
+                const musicStart = document.getElementById("musicMain")
+                musicStart.pause()
+                const victorySound = document.getElementById("victory")
+                victorySound.pause()
+                victorySound.currentTime = 0
+                victorySound.volume = 0.5
+                victorySound.play()
                 alert('¡Has ganado!');
                 this.reset(); // Reinicia el juego cuando se gana
             }
@@ -173,6 +182,8 @@ const Game = {
     
         this.score = 0;
         this.scoreboard.init(this.ctx);
+
+        
 
         this.start();
     },
@@ -424,6 +435,8 @@ const Game = {
                     this.player.lives--;
     
                     if (this.player.lives <= 0) {
+                        const musicStart = document.getElementById("musicMain")
+                        musicStart.pause()
                         alert('¡Has perdido!');
                         this.reset()
                     }
