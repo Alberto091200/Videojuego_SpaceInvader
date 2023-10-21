@@ -22,7 +22,7 @@ class Enemy {
 		this.enemy2lives = enemy2lives
 		this.enemy3lives = enemy3lives
 
-		this.bulletsEnemy = [];
+
 	}
 
 	animateSprite(frameCounter) {
@@ -45,6 +45,7 @@ class Enemy {
 class Alien1 extends Enemy {
 	constructor(ctx, x, y, enemy1lives) {
 		super(ctx, x, y, 25, 15, 'assets/Alien1.png', 1,null, enemy1lives) // Aguanta 1 bala, dispara
+		this.bulletsEnemy = [];
 	}
 
 	draw(frameCounter) {
@@ -90,7 +91,7 @@ class Alien2 extends Enemy {
 	draw(frameCounter) {
 		this.ctx.drawImage(
 			this.img,
-			this.img.frameIndex * (this.img.width / this.img.frames),
+			this.img.frameIndex * (207 / this.img.frames),
 			0,
 			this.img.width / this.img.frames,
 			this.img.height,

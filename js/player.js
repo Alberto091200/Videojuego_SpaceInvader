@@ -25,6 +25,7 @@ class Player {
 		this.w = 30
 		this.h = 25
 
+		this.lives = 3;
         this.bullets = []
 
 		this.actions = {
@@ -98,7 +99,10 @@ class Player {
 	}
 
     shot() {
+		if(this.lives > 0) {
 		this.bullets.push(new Bullet(this.ctx, this.x - 15 + this.w, this.y0 - 220, this.y, this.h));
+		this.shotsFired++;
+		}
 	}
 
 	animateSprite(frameCounter) {
