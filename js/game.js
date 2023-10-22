@@ -12,7 +12,7 @@ const Game = {
     },
 
     walls:[],
-    lives : 5,
+    lives : 10,
 
     enemy1: [],
     enemy1lives: 1,
@@ -104,6 +104,8 @@ const Game = {
             this.CollisionAlien3()
             this.CollisionBalaEnemyWall()
             this.Collision5()
+            this.Collision6()
+
 
             if (this.enemy1.length === 0 && this.enemy2.length === 0 && this.enemy3.length === 0) {
                 const musicStart = document.getElementById("musicMain")
@@ -184,7 +186,7 @@ const Game = {
         this.scoreboard.init(this.ctx);
 
         
-
+        
         this.start();
     },
     
@@ -443,6 +445,27 @@ const Game = {
                 }
             });
         });
+    },
+
+    Collision6() {
+        this.enemy3.forEach((enemy3) => {
+            if (
+                enemy3.x < this.player.x + this.player.w &&
+                enemy3.x + enemy3.width > this.player.x &&
+                enemy3.y < this.player.y + this.player.h &&
+                enemy3.y + enemy3.height > this.player.y
+            ) {
+                this.player.lives--;
+    
+                if (this.player.lives <= 0) {
+                    const musicStart = document.getElementById("musicMain");
+                    musicStart.pause();
+                    alert('¡Has perdido!');
+                    this.reset();
+                }
+            }
+        });
     }
+    
       
 }
